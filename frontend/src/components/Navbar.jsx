@@ -13,30 +13,30 @@ function Navbar() {
   return (
 <nav className="navbar navbar-expand-lg bg-body-tertiary pt-0 pb-0">
   <div className="container-fluid bg-dark p-3">
-    <NavLink className="text-decoration-none text-light fs-4 me-3" to="/">Pizzería Mamma Mía</NavLink>
+    <NavLink className="text-decoration-none text-light fs-4 me-3 px-4" to="/">BICIADOS</NavLink>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav">
-        <li className="nav-item">
-          <NavLink className={validaRoot} text-light aria-current="page" to="/">🍕Home</NavLink>
+        <li className="nav-item px-2">
+          <NavLink className={validaRoot} text-light aria-current="page" to="/">Home</NavLink>
         </li>
 
         {userIsLogged ? 
        <>
-       <li className="nav-item">
+       <li className="nav-item px-2">
           <NavLink className={validaRoot} text-light to="/profile">🪪Profile</NavLink>
         </li>
-        <li className="nav-item">
+        <li className="nav-item px-2">
           <NavLink className={validaRoot} text-light onClick={handleLogout2}>🔓Log Out</NavLink>
         </li>
        </> :
        <>
-       <li className="nav-item">
+       <li className="nav-item px-2">
           <NavLink className={validaRoot} text-light to="/login">🔒Login</NavLink>
         </li>
-        <li className="nav-item">
+        <li className="nav-item px-2">
           <NavLink className={validaRoot} text-light to="/register">🔒Register</NavLink>
         </li>
        </>   
