@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 
-function Cardpizza({ id, name, price, ingredients, img }) {
+function Cardpizza({ id, name, price, categoria, img }) {
   const { setCarrito, carrito } = useContext(GlobalContext);
   const [isAdding, setIsAdding] = useState(false);
   const navigate = useNavigate(); 
@@ -29,7 +29,7 @@ function Cardpizza({ id, name, price, ingredients, img }) {
         id,
         name, 
         price, 
-        ingredients, 
+        categoria, 
         img,
         quantity: 1 
       }];
@@ -59,12 +59,12 @@ function Cardpizza({ id, name, price, ingredients, img }) {
       <div className='card-body d-flex flex-column'>
         <h2 className='card-title h5 text-truncate text-center mb-4' title={name}>{name.toUpperCase()}</h2>
         
-        <div className='ingredients mb-2 flex-grow-1'>
-          <h3 className='h6'>Ingredientes:</h3>
+        <div className='categoria mb-2 flex-grow-1'>
+          <h3 className='h6'>Categorías:</h3>
           <ul className='list-unstyled'>
-            {ingredients.map((ingredient, index) => (
+            {categoria.map((ingredient, index) => (
               <li key={index} className='mb-1 d-flex align-items-center'>
-                <span className='me-1'>🍕</span>
+                
                 <span>{ingredient.charAt(0).toUpperCase()}{ingredient.slice(1)}</span>
               </li>
             ))}
@@ -98,7 +98,7 @@ Cardpizza.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  categoria: PropTypes.arrayOf(PropTypes.string).isRequired,
   img: PropTypes.string.isRequired
 };
 

@@ -29,7 +29,7 @@ const Pizza = () => {
     <>
     <div className='d-flex justify-content-center m-5'>
       <div className="card" style={{width: "18rem"}}>
-        <img src={pizzalist.img} className="card-img-top" alt="imagen de pizza seleccionada"/>
+        <img src={pizzalist.img} className="card-img-top" alt="imagen del producto seleccionado"/>
         <div className="card-body">
           <h5 className="card-title">Pizza {pizzalist.name}</h5>
           <h5 className="card-title">${pizzalist.price}</h5>

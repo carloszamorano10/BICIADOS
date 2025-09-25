@@ -1,50 +1,66 @@
 [
   {
-    "desc": "La pizza napolitana, de masa tierna y delgada pero bordes altos, es la versión propia de la cocina napolitana de la pizza redonda. El término pizza napoletana, por su importancia histórica o regional, se emplea en algunas zonas como sinónimo de pizza tonda.",
+    "desc": "cuadro ligeramente más largo que el tradicional, con una inclinación negativa para una posición hiperagresiva y aerodinámica del ciclista",
     "id": "p001",
-    "img": "https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_cl.jpg?alt=media&token=6a9a33da-5c00-49d4-9080-784dcc87ec2c",
-    "ingredients": ["mozzarella", "tomates", "jamón", "orégano"],
-    "name": "napolitana",
-    "price": 5950
+    "img": "http://imgfz.com/i/smdYIcK.jpeg",
+    "categoria": ["Cuadro"],
+    "name": "Cinelli: Vigorelli Frame Set",
+    "price": 990000
   },
   {
-    "desc": "La pizza es una preparación culinaria que consiste en un pan plano, habitualmente de forma circular, elaborado con harina de trigo, levadura, agua y sal (a veces aceite de oliva) que comúnmente se cubre con salsa de tomate, queso y otros muchos ingredientes, y que se hornea a alta temperatura, tradicionalmente en un horno de leña.",
+    "desc": "Pedales Gates son unos clásicos inspirados en BMX con una plataforma ancha y tacos de agarre moldeados, lo que lo convierte en los pedales Fyxation más populares",
     "id": "p002",
-    "img": "https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fcheese-164872_640_com.jpg?alt=media&token=18b2b821-4d0d-43f2-a1c6-8c57bc388fab",
-    "ingredients": ["mozzarella", "tomates", "jamón", "choricillo"],
-    "name": "española",
-    "price": 7250
+    "img": "http://imgfz.com/i/Zs2iPvB.jpeg",
+    "categoria": ["Pedales"],
+    "name": "Fyxation: Gates",
+    "price": 23000
   },
   {
-    "desc": "La pizza es una preparación culinaria que consiste en un pan plano, habitualmente de forma circular, elaborado con harina de trigo, levadura, agua y sal (a veces aceite de oliva) que comúnmente se cubre con salsa de tomate, queso y otros muchos ingredientes, y que se hornea a alta temperatura, tradicionalmente en un horno de leña.",
+    "desc": "Ligero, rígido y asequible, el volante S-300 de SRAM es una gran mejora para cualquier ciclista de urbano serio. Una ventaja adicional es que incluye el motor.",
     "id": "p003",
-    "img": "https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_com.jpg?alt=media&token=e7cde87a-08d5-4040-ac54-90f6c31eb3e3",
-    "ingredients": ["mozzarella", "tomates", "salame", "orégano"],
-    "name": "salame",
-    "price": 5990
+    "img": "http://imgfz.com/i/AepyYOH.jpeg",
+    "categoria": ["Volante"],
+    "name": "SRAM: S-300 Crankset",
+    "price": 150000
   },
   {
-    "desc": "La pizza es una preparación culinaria que consiste en un pan plano, habitualmente de forma circular, elaborado con harina de trigo, levadura, agua y sal (a veces aceite de oliva) que comúnmente se cubre con salsa de tomate, queso y otros muchos ingredientes, y que se hornea a alta temperatura, tradicionalmente en un horno de leña.",
+    "desc": "Corona de 130 mm o 144 BCD disponible en 46T / 48T / 50T / 52T. Espesor diente: 3 mm. Color negro",
     "id": "p004",
-    "img": "https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-2000595_640_c.jpg?alt=media&token=61325b6e-a1e0-441e-b3b5-7335ba13e8be",
-    "ingredients": ["mozzarella", "salame", "aceitunas", "champiñones"],
-    "name": "cuatro estaciones",
-    "price": 9590
+    "img": "http://imgfz.com/i/wfX6Gjd.jpeg",
+    "categoria": ["Corona"],
+    "name": "Gebhardt: Track Chainring 130/144 BCD",
+    "price": 45000
   },
   {
-    "desc": "La pizza es una preparación culinaria que consiste en un pan plano, habitualmente de forma circular, elaborado con harina de trigo, levadura, agua y sal (a veces aceite de oliva) que comúnmente se cubre con salsa de tomate, queso y otros muchos ingredientes, y que se hornea a alta temperatura, tradicionalmente en un horno de leña.",
+    "desc": "Las manetas de freno SRAM S500 son la combinación perfecta para los ciclistas que solo necesitan una marcha. Con palanca de freno de aluminio. Totalmente compatible con las pinzas de freno SRAM Red, Force y Rival.",
     "id": "p005",
-    "img": "https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-salame.jpg?alt=media&token=ab3d4bf8-01f2-4810-982b-bd7fb6b517b2",
-    "ingredients": ["mozzarella", "tomates cherry", "bacon", "orégano"],
-    "name": "bacon",
-    "price": 6450
+    "img": "http://imgfz.com/i/2r5gMSF.jpeg",
+    "categoria": ["Manillas"],
+    "name": "SRAM: S-500 Brake Levers",
+    "price": 79000
   },
   {
-    "desc": "La pizza es una preparación culinaria que consiste en un pan plano, habitualmente de forma circular, elaborado con harina de trigo, levadura, agua y sal (a veces aceite de oliva) que comúnmente se cubre con salsa de tomate, queso y otros muchos ingredientes, y que se hornea a alta temperatura, tradicionalmente en un horno de leña.",
+    "desc": "Lo mejor en versatilidad en ruta, llevado a un nivel de rendimiento completamente nuevo. Viaja más rápido, más cómodo y con mayor protección contra pinchazos. Hecho para hacerte mejor.",
+    "id": "p005",
+    "img": "http://imgfz.com/i/jtQmTxl.jpeg",
+    "categoria": ["Neumatico"],
+    "name": "Continental: Grand Prix 5000",
+    "price": 75000
+  },
+  {
+    "desc": "Juego de calas Shimano SPD-SL 6 grados tipo flotante SM-SH11. Para SPD-SL, tipo flotante 6 grados",
+    "id": "p005",
+    "img": "http://imgfz.com/i/L5gCRum.jpeg",
+    "categoria": ["Calas"],
+    "name": "Shimano: Calas SPD-SL",
+    "price": 22000
+  },
+  {
+    "desc": "BLB Flight es un manubrio drop compacto, perfilado ergonómicamente para crits y carreras. Mantener esa posición de carrera agresiva significa que es súper rígido para la transferencia de potencia.",
     "id": "p006",
-    "img": "https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-2000595_640_c.jpg?alt=media&token=61325b6e-a1e0-441e-b3b5-7335ba13e8be",
-    "ingredients": ["mozzarella", "pimientos", "pollo grillé", "orégano"],
-    "name": "pollo picante",
-    "price": 8500
+    "img": "http://imgfz.com/i/pA4Qnk8.jpeg",
+    "categoria": ["Manubrio"],
+    "name": "BLB: Flight Drop",
+    "price": 35000
   }
 ]

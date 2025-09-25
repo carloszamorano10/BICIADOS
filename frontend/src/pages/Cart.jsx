@@ -95,12 +95,12 @@ const Cart = () => {
           </svg>
         </div>
         <h2 className="mb-3">Tu carrito está vacío</h2>
-        <p className="text-muted mb-4">Agrega algunas pizzas del menú</p>
+        <p className="text-muted mb-4">Agrega artículos a tu carrito</p>
         <button 
           className="btn btn-primary"
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/products')}
         >
-          Ver Menú
+          Ver Productos
         </button>
       </div>
     );
@@ -130,8 +130,8 @@ const Cart = () => {
                       <div>
                         <h2 className="h5 card-title mb-1">{pizza.name}</h2>
                         <p className="text-muted small mb-2">
-                          {pizza.ingredients.slice(0, 3).join(', ')}
-                          {pizza.ingredients.length > 3 && '...'}
+                          {pizza.categoria.slice(0, 3).join(', ')}
+                          {pizza.categoria.length > 3 && '...'}
                         </p>
                       </div>
                       <button 

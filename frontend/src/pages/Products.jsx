@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import Cardpizza from "../components/Cardpizza";
 import { GlobalContext } from "../context/GlobalContext";
-import Map from "../components/Map";
-import Carrusel from "../components/Carrusel";
 
-function Home() {
-  const { pizzalist, getPizzas } = useContext(GlobalContext);
+
+
+function Products() {
+  const { pizzalist, getPizzas } = useContext(GlobalContext)
 
   useEffect(() => {
     getPizzas();
@@ -15,7 +15,6 @@ function Home() {
   return (
     <>
       <Header />
-      <Carrusel />
       <h2 className="text-center">Productos</h2>
       <div className="contpizza">
         {pizzalist.map((pizza) => (
@@ -29,9 +28,8 @@ function Home() {
           />
         ))}
       </div>
-      <Map />
     </>
   );
 }
 
-export default Home;
+export default Products;
