@@ -1,30 +1,28 @@
 import React, { useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
-import Cardpizza from "../components/Cardpizza";
+import CardBici from "../components/CardBici";
 import { GlobalContext } from "../context/GlobalContext";
 
-
-
 function Products() {
-  const { pizzalist, getPizzas } = useContext(GlobalContext)
+  const { bicilist, getBicis } = useContext(GlobalContext);
 
   useEffect(() => {
-    getPizzas();
+    getBicis();
   }, []);
 
   return (
     <>
       <Header />
       <h2 className="text-center">Productos</h2>
-      <div className="contpizza">
-        {pizzalist.map((pizza) => (
-          <Cardpizza
-            key={pizza.id}
-            id={pizza.id}
-            name={pizza.name}
-            price={pizza.price}
-            categoria={pizza.categoria}
-            img={pizza.img}
+      <div className="contbici">
+        {bicilist.map((Bici) => (
+          <CardBici
+            key={Bici.id}
+            id={Bici.id}
+            name={Bici.name}
+            price={Bici.price}
+            categoria={Bici.categoria}
+            img={Bici.img}
           />
         ))}
       </div>

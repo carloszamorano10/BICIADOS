@@ -16,16 +16,16 @@ npm run dev
 
 ## Endpoints
 
-### Pizzas
+### Bicis
 
 ```sh
-GET /api/pizzas
+GET /api/Bicis
 ```
 
-### Pizza (única)
+### Bici (única)
 
 ```sh
-GET /api/pizzas/:id
+GET /api/Bicis/:id
 ```
 
 ### Auth
