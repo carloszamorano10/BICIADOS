@@ -7,7 +7,6 @@ export const GlobalContext = createContext();
 const GlobalProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
   const [favorites, setFavorites] = useState(() => {
-    // Cargar favoritos desde localStorage al inicializar
     if (typeof window !== 'undefined') {
       try {
         const savedFavorites = localStorage.getItem('biciFavorites');
@@ -25,7 +24,6 @@ const GlobalProvider = ({ children }) => {
     return Boolean(localStorage.getItem("token"));
   });
   
-  // Efecto para guardar favoritos en localStorage cuando cambien
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {

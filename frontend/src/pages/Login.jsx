@@ -9,18 +9,12 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const {handleLogin} = useContext(GlobalContext);
 
-
-   
-
     const handleSubmit = async (e) =>{
          e.preventDefault();
-         await handleLogin(email, password);
-          
+         await handleLogin(email, password);  
        }
    
-
    
-
   return (
     <>
     <div class="d-flex flex-column align-items-center py-3">

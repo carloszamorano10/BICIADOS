@@ -9,9 +9,8 @@ function CardBici({ id, name, price, categoria, img }) {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
-  // Sincronizar el estado de like
   useEffect(() => {
-    setIsLiked(favorites.some(item => item.id === id));
+    setIsLiked(favorites.some((item) => item.id === id));
   }, [favorites, id]);
 
   const handleAdd = async () => {
@@ -27,23 +26,18 @@ function CardBici({ id, name, price, categoria, img }) {
             : item
         );
       }
-      return [
-        ...prevCarrito,
-        { id, name, price, categoria, img, quantity: 1 },
-      ];
+      return [...prevCarrito, { id, name, price, categoria, img, quantity: 1 }];
     });
     setIsAdding(false);
   };
 
   const btnFav = () => {
     setFavorites((prevFavorites) => {
-      const isCurrentlyLiked = prevFavorites.some(item => item.id === id);
-      
+      const isCurrentlyLiked = prevFavorites.some((item) => item.id === id);
+
       if (isCurrentlyLiked) {
-        // Remover de favoritos
-        return prevFavorites.filter(item => item.id !== id);
+        return prevFavorites.filter((item) => item.id !== id);
       } else {
-        // Agregar a favoritos
         return [...prevFavorites, { id, name, price, categoria, img }];
       }
     });
@@ -63,30 +57,30 @@ function CardBici({ id, name, price, categoria, img }) {
           style={{ height: "180px", objectFit: "cover", width: "100%" }}
           loading="lazy"
         />
-        
+
         <button
           className="position-absolute top-0 start-0 bg-white rounded-circle border-0 m-2"
-          style={{ 
-            width: "40px", 
-            height: "40px", 
-            display: "flex", 
-            alignItems: "center", 
+          style={{
+            width: "40px",
+            height: "40px",
+            display: "flex",
+            alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
-            boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
+            boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
           }}
           onClick={btnFav}
           aria-label={isLiked ? "Quitar de favoritos" : "Agregar a favoritos"}
         >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="20" 
-            height="20" 
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
             fill={isLiked ? "#dc3545" : "#6c757d"}
             viewBox="0 0 16 16"
           >
-            <path 
-              fillRule="evenodd" 
+            <path
+              fillRule="evenodd"
               d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
             />
           </svg>
@@ -98,7 +92,10 @@ function CardBici({ id, name, price, categoria, img }) {
       </div>
 
       <div className="card-body d-flex flex-column">
-        <h2 className="card-title h5 text-truncate text-center mb-4" title={name}>
+        <h2
+          className="card-title h5 text-truncate text-center mb-4"
+          title={name}
+        >
           {name.toUpperCase()}
         </h2>
 
@@ -108,7 +105,7 @@ function CardBici({ id, name, price, categoria, img }) {
             {categoria.map((ingredient, index) => (
               <li key={index} className="mb-1 d-flex align-items-center">
                 <span>
-                 - {ingredient.charAt(0).toUpperCase()}
+                  - {ingredient.charAt(0).toUpperCase()}
                   {ingredient.slice(1)}
                 </span>
               </li>
