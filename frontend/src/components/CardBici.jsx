@@ -103,12 +103,12 @@ function CardBici({ id, name, price, categoria, img }) {
         </h2>
 
         <div className="categoria mb-2 flex-grow-1">
-          <h3 className="h6">Categorías:</h3>
-          <ul className="list-unstyled">
+          <h3 className="h6">Categoría:</h3>
+          <ul className="list">
             {categoria.map((ingredient, index) => (
               <li key={index} className="mb-1 d-flex align-items-center">
                 <span>
-                  {ingredient.charAt(0).toUpperCase()}
+                 - {ingredient.charAt(0).toUpperCase()}
                   {ingredient.slice(1)}
                 </span>
               </li>

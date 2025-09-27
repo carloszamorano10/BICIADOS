@@ -13,7 +13,7 @@ function Navbar() {
   return (
 <nav className="navbar navbar-expand-lg bg-body-tertiary pt-0 pb-0">
   <div className="container-fluid bg-dark p-3">
-    <NavLink className="text-decoration-none text-light fs-4 me-3 px-4" to="/">BICIADOS</NavLink>
+    <NavLink className="text-decoration-none text-light fs-1 me-3 px-4" to="/">BICIADOS</NavLink>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>

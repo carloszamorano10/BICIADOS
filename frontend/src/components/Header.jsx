@@ -4,7 +4,7 @@ function Header() {
   return (
     <>
       <div className="bkimgheader ">
-        <h1 className="mx-5">BICIADOS</h1>
+        <h1 className="mx-5 fa-4x">BICIADOS</h1>
       </div>
     </>
   );

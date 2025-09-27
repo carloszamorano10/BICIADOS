@@ -13,7 +13,7 @@ function Products() {
   return (
     <>
       <Header />
-      <h2 className="text-center">Productos</h2>
+      <h2 className="text-center p-5 fs-1">Productos</h2>
       <div className="contbici">
         {bicilist.map((Bici) => (
           <CardBici
