@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -6,11 +6,35 @@ export const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+    // Cargar favoritos desde localStorage al inicializar
+    if (typeof window !== 'undefined') {
+      try {
+        const savedFavorites = localStorage.getItem('biciFavorites');
+        return savedFavorites ? JSON.parse(savedFavorites) : [];
+      } catch (error) {
+        console.log('Error loading favorites from localStorage:', error);
+        return [];
+      }
+    }
+    return [];
+  });
   const [bicilist, setBicislist] = useState([]);
   const [user, setUser] = useState("");
   const [userIsLogged, setUserIsLogged] = useState(() => {
     return Boolean(localStorage.getItem("token"));
   });
+  
+  // Efecto para guardar favoritos en localStorage cuando cambien
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('biciFavorites', JSON.stringify(favorites));
+      } catch (error) {
+        console.log('Error saving favorites to localStorage:', error);
+      }
+    }
+  }, [favorites]);
 
   const getBicis = async () => {
     const response = await fetch("http://localhost:5000/api/pizzas");
@@ -135,14 +159,13 @@ const GlobalProvider = ({ children }) => {
       return false;
     }
   };
-
+ 
   const handleLogout2 = () => {
     Swal.fire({
       icon: "success",
       text: "Logout exitoso, ¡nos vemos!",
     });
     localStorage.removeItem("token");
-    setDireccion({});
     setUser(null);
     setUserIsLogged(false);
   };
@@ -156,6 +179,8 @@ const GlobalProvider = ({ children }) => {
         setCarrito,
         totalCart,
         user,
+        favorites,
+        setFavorites,
         setUser,
         userIsLogged,
         setUserIsLogged,

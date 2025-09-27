@@ -8,7 +8,8 @@ import Login from "./pages/Login";
 import Products from "./pages/Products";
 import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
-import Pizza from "./pages/Pizza";
+import Favoritos from "./pages/Favoritos";
+import Bici from "./pages/Bici";
 import { Profile } from "./components/Profile";
 import { NotFound } from "./components/NotFound";
 import { GlobalContext } from "./context/GlobalContext";
@@ -25,8 +26,9 @@ function App() {
         <Route path="/cart" element={<Cart />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
+        <Route path="/favoritos" element={<Favoritos />}/>
         <Route path="/products" element={<Products />}/>
-        <Route path="/pizza/:id" element={<Pizza />}/>
+        <Route path="/pizza/:id" element={<Bici />}/>
         <Route path="/profile" 
         element={userIsLogged ? <Profile /> : <Navigate to={"/login"}></Navigate>}/>
         <Route path="/*" element={<NotFound />}/>

@@ -25,9 +25,15 @@ function Navbar() {
         <li className="nav-item px-2">
           <NavLink className={validaRoot} text-light aria-current="page" to="/products">Productos</NavLink>
         </li>
+        <li className="nav-item px-2">
+          <NavLink className={validaRoot} text-light aria-current="page" to="/favoritos">Mis Favoritos</NavLink>
+        </li>
 
         {userIsLogged ? 
        <>
+       <li className="nav-item px-2">
+          <NavLink className={validaRoot} text-light to="/profile">Crear Publicación</NavLink>
+        </li>
        <li className="nav-item px-2">
           <NavLink className={validaRoot} text-light to="/profile">🪪Profile</NavLink>
         </li>
