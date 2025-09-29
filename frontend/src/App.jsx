@@ -13,6 +13,7 @@ import Bici from "./pages/Bici";
 import { Profile } from "./components/Profile";
 import { NotFound } from "./components/NotFound";
 import { GlobalContext } from "./context/GlobalContext";
+import Creapublicacion from "./pages/Creapublicacion";
 
 function App() {
   const {userIsLogged} = useContext(GlobalContext)
@@ -28,6 +29,7 @@ function App() {
         <Route path="/register" element={<Register />}/>
         <Route path="/favoritos" element={<Favoritos />}/>
         <Route path="/products" element={<Products />}/>
+        <Route path="/creaPublicacion" element={<Creapublicacion />}/>
         <Route path="/pizza/:id" element={<Bici />}/>
         <Route path="/profile" 
         element={userIsLogged ? <Profile /> : <Navigate to={"/login"}></Navigate>}/>
