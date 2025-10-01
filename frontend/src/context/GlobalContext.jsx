@@ -50,6 +50,61 @@ const GlobalProvider = ({ children }) => {
 
   const navegar = useNavigate();
 
+  const handleRegisterProducto = async ( id, name, desc, price,img, categoria) => {
+  try {
+    console.log('esto trae');
+    console.log({ id, name, desc, price, img, categoria});
+    
+    const response = await fetch("http://localhost:5000/api/pizzas/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, name, desc, price, img, categoria }),
+    });
+
+    if (!response.ok) {
+      
+      const errorText = await response.text();
+      console.error('Error en la respuesta del servidor:', response.status, errorText);
+      Swal.fire({
+        icon: "error",
+        title: `Error ${response.status}`,
+        text: errorText || "Error en la solicitud",
+      });
+      return false;
+    }
+
+    const data = await response.json();
+    console.log('paso 1');
+    console.log(data);
+
+    if (data?.error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${data.error}`,
+      });
+      return false;
+    }
+
+    Swal.fire({
+      icon: "success",
+      text: "Registro exitoso",
+    });
+
+    navegar("/");
+    return true;
+
+  } catch (error) {
+    console.error('Error capturado en catch:', error);
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Ocurrió un error al intentar registrar el producto",
+    });
+    return false;
+  }
+};
+
   const handleLogin = async (email, password) => {
     try {
       const response = await fetch("http://localhost:5000/api/auth/login", {
@@ -186,6 +241,7 @@ const GlobalProvider = ({ children }) => {
         fetchUserData,
         handleLogout2,
         handleRegister,
+        handleRegisterProducto
       }}
     >
       {children}

@@ -22,9 +22,7 @@ function Navbar() {
         <li className="nav-item px-2">
           <NavLink className={validaRoot} text-light aria-current="page" to="/">Home</NavLink>
         </li>
-        <li className="nav-item px-2">
-          <NavLink className={validaRoot} text-light aria-current="page" to="/products">Productos</NavLink>
-        </li>
+
         <li className="nav-item px-2">
           <NavLink className={validaRoot} text-light aria-current="page" to="/favoritos">Mis Favoritos</NavLink>
         </li>
@@ -32,7 +30,7 @@ function Navbar() {
         {userIsLogged ? 
        <>
        <li className="nav-item px-2">
-          <NavLink className={validaRoot} text-light to="/creaPublicacion">Crear Publicación</NavLink>
+          <NavLink className={validaRoot} text-light to="/producto">Crear Publicación</NavLink>
         </li>
        <li className="nav-item px-2">
           <NavLink className={validaRoot} text-light to="/profile">🪪Profile</NavLink>
@@ -54,7 +52,7 @@ function Navbar() {
       
     </div>
         <li className="nav-item d-flex justify-content-end ">
-          <NavLink className={validaRoot} to="/cart">🛒Total: {totalCart}</NavLink>
+          <NavLink className={validaRoot} to="/cart">🛒Total: $ {totalCart}</NavLink>
         </li>      
   </div>
 </nav>
