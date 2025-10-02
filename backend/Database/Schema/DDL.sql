@@ -1,0 +1,62 @@
+CREATE DATABASE Biciados;
+
+\c Biciadoos;
+
+CREATE TABLE usuario (
+  id           SERIAL        PRIMARY KEY,
+  nombre       VARCHAR(50)   NOT NULL,
+  apellido     VARCHAR(50)   NOT NULL,
+  email        VARCHAR(50)   NOT NULL UNIQUE,
+  password     VARCHAR(60)   NOT NULL,
+  created_at   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  updated_at   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  tipoUsuario  BOOLEAN       DEFAULT FALSE
+);
+
+CREATE TABLE productos (
+  id          SERIAL        PRIMARY KEY,
+  titulo      VARCHAR(255)  NOT NULL,
+  precio      DECIMAL(10,2) NOT NULL,
+  stock       INT           NOT NULL DEFAULT 0,
+  descripcion TEXT,
+  created_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  updated_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE publicaciones (
+  id           SERIAL        PRIMARY KEY,
+  id_producto  INT           NOT NULL,
+  id_usuario   INT           NOT NULL,
+  cantidad     INT           NOT NULL DEFAULT 1,
+  created_at   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  updated_at   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  
+  FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE
+);
+
+CREATE TABLE favoritos (
+  id          SERIAL        PRIMARY KEY,
+  id_producto INT           NOT NULL,
+  id_usuario  INT           NOT NULL,
+  like        BOOLEAN       DEFAULT TRUE, 
+  created_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  updated_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  
+
+  FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
+  );
+
+  CREATE TABLE ventas (
+  id          SERIAL        PRIMARY KEY,
+  id_producto INT           NOT NULL,
+  id_usuario  INT           NOT NULL,
+  cantidad    INT           NOT NULL DEFAULT 1,
+  created_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  updated_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  
+
+  FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE RESTRICT,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE RESTRICT
+);
