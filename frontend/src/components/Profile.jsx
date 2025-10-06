@@ -34,7 +34,8 @@ export const Profile = () => {
           alt="Imagen de perfil" 
         />
         <div className="card-body">
-          <h5 className="card-title text-center">{user.name || 'Usuario'}</h5>
+         <h5 className="card-title text-center">{user.user?.nombre || "Nombre no disponible"}</h5>
+         <h5 className="card-title text-center">{user.user?.apellido || "Apellido no disponible"}</h5>
         </div>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">Email: {user.email}</li>

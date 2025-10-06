@@ -1,51 +1,115 @@
 import { pizzaModel } from "../models/pizza.model.js";
 
-
 const readPizzas = async (req, res) => {
-  const pizzas = await pizzaModel.getPizzas();
-  res.json(pizzas);
+  try {
+    const pizzas = await pizzaModel.getPizzas();
+    res.json(pizzas);
+  } catch (error) {
+    console.error("Error en readPizzas:", error);
+    res.status(500).json({ error: "Error al obtener productos" });
+  }
 };
 
 const readPizza = async (req, res) => {
-  const { id } = req.params;
-  const pizza = await pizzaModel.getPizza(id.toLowerCase());
-  if (!pizza) {
-    return res.status(404).json({ message: "Tour no Encontrado" });
+  try {
+    const { id } = req.params;
+    console.log("🔍 Buscando producto con ID:", id);
+    
+    const pizza = await pizzaModel.getPizza(id);
+    
+    if (!pizza) {
+      return res.status(404).json({ 
+        success: false,
+        message: "Producto no encontrado" 
+      });
+    }
+    
+    res.json(pizza);
+    
+  } catch (error) {
+    console.error("Error en readPizza:", error);
+    res.status(500).json({ error: "Error al buscar producto" });
   }
-  res.json(pizza);
 };
-  const buscaproducto= async (req, res) => {
-  const { id } = req.params;
-  const pizza = await pizzaModel.getPizza(id.toLowerCase());
-  if (!pizza) {
-    return res.status(404).json({ message: "producto no Encontrado" });
+
+const buscaproducto = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const producto = await pizzaModel.BuscaProducto(id);
+    
+    if (!producto) {
+      return res.status(404).json({ message: "Producto no encontrado" });
+    }
+    
+    res.json(producto);
+    
+  } catch (error) {
+    console.error("Error en buscaproducto:", error);
+    res.status(500).json({ error: "Error al buscar producto" });
   }
-  res.json(pizza);
 };
-  
+
 const register = async (req, res) => {
-   console.log("BODY recibido:", req.body);
   try {
     console.log("BODY recibido:", req.body);
-    const { id, name, desc,price, img, categoria} = req.body;
+    const { name, desc, price, img, categoria } = req.body;
     
-    
-
-    if (!id.trim() || !name.trim()) {
-      return res.status(400).json({ error: "Ingrese todos los campos requeridos" });
+    if (!name || !price) {
+      return res.status(400).json({ error: "Nombre y precio son requeridos" });
     }
 
-    const newProducto = { id, name, price, desc, img, categoria }; 
+    const newProducto = { name, price, desc, img, categoria };
+    console.log("Datos a guardar:", newProducto);
 
-    console.log("Datos recibidos:", newProducto);
-    console.log("entro al backend register");
-
-    await pizzaModel.nuevoProducto(newProducto); 
-
-    return res.json(newProducto);
+    const productoGuardado = await pizzaModel.nuevoProducto(newProducto);
+    
+    return res.status(201).json({
+      message: "Producto creado exitosamente",
+      producto: productoGuardado
+    });
+    
   } catch (error) {
     console.error("Error en register:", error);
-    return res.status(500).json({ error: "Server error entro" });
+    return res.status(500).json({ error: "Error del servidor: " + error.message });
+  }
+};
+
+const getAllProductos = async (req, res) => {
+  try {
+    const productos = await pizzaModel.getProductosModels();
+    res.json(productos);
+  } catch (error) {
+    console.log("error =>", error);
+    res.status(500).json({ error: "Error al obtener productos" });
+  }
+};
+
+const getProductoById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("🔍 Buscando producto con ID:", id);
+    
+    const producto = await pizzaModel.getPizza(id); // Usa getPizza en lugar de getBici
+    
+    if (!producto) {
+      return res.status(404).json({ 
+        success: false,
+        message: "Producto no encontrado" 
+      });
+    }
+    
+    console.log("✅ Producto encontrado:", producto);
+    res.json({
+      success: true,
+      producto
+    });
+    
+  } catch (error) {
+    console.error("❌ Error en getProductoById:", error);
+    res.status(500).json({ 
+      success: false,
+      error: "Error al buscar el producto: " + error.message 
+    });
   }
 };
 
@@ -53,6 +117,9 @@ export const pizzaController = {
   readPizzas,
   readPizza,
   buscaproducto,
-  register
-
+  register,
+  getAllProductos,
+  getProductoById
 };
+
+export { getAllProductos, getProductoById };

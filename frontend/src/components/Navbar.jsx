@@ -30,7 +30,7 @@ function Navbar() {
         {userIsLogged ? 
        <>
        <li className="nav-item px-2">
-          <NavLink className={validaRoot} text-light to="/producto">Crear Publicación</NavLink>
+          <NavLink className={validaRoot} text-light to="/creaPublicacion">Crear Publicación</NavLink>
         </li>
        <li className="nav-item px-2">
           <NavLink className={validaRoot} text-light to="/profile">🪪Profile</NavLink>

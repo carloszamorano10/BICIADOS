@@ -19,7 +19,7 @@ function Products() {
           <CardBici
             key={Bici.id}
             id={Bici.id}
-            name={Bici.name}
+            name={Bici.titulo}
             price={Bici.price}
             categoria={Bici.categoria}
             img={Bici.img}

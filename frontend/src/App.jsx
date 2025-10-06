@@ -30,7 +30,7 @@ function App() {
         <Route path="/favoritos" element={<Favoritos />}/>
         <Route path="/products" element={<Products />}/>
         <Route path="/creaPublicacion" element={<Creapublicacion />}/>
-        <Route path="/pizza/:id" element={<Bici />}/>
+        <Route path="/bici/:id" element={<Bici />}/>
         <Route path="/profile" 
         element={userIsLogged ? <Profile /> : <Navigate to={"/login"}></Navigate>}/>
         <Route path="/*" element={<NotFound />}/>

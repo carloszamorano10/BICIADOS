@@ -1,29 +1,54 @@
+import pool from "../Database/config.js"
 
-import { readFile, writeFile } from "node:fs/promises";
 
 const getPizzas = async () => {
-  const data = await readFile("db/pizzas.json", "utf-8");
-  return JSON.parse(data);
+  const sqlQuery = "SELECT * FROM productos";
+  const response = await pool.query(sqlQuery);
+  return response.rows;
 };
 
 const getPizza = async (id) => {
-  const pizzas = await getPizzas();
-  return pizzas.find((pizza) => pizza.id === id);
+  try {
+    console.log("🔍 Buscando en BD producto con ID:", id);
+    const productId = parseInt(id);
+    
+    if (isNaN(productId)) {
+      throw new Error("ID no válido");
+    }
+    
+    const sqlQuery = "SELECT * FROM productos WHERE id = $1";
+    const response = await pool.query(sqlQuery, [productId]);
+    
+    console.log("📊 Resultados encontrados:", response.rows.length);
+    return response.rows[0];
+    
+  } catch (error) {
+    console.error("❌ Error en getPizza model:", error);
+    throw error;
+  }
 };
 
-//import { readFile, writeFile } from "node:fs/promises";
-
 const BuscaProducto = async (id) => {
-  const data = await readFile("db/pizzas.json", "utf-8");
-  const productos = JSON.parse(data);
-  return productos.find((producto) => producto.id === id);
+  return await getPizza(id);
 };
 
 const nuevoProducto = async (newp) => {
-  const data = await readFile("db/pizzas.json", "utf-8");
-  const nuevoProducto = JSON.parse(data);
-  nuevoProducto.push(newp);
-  await writeFile("db/pizzas.json", JSON.stringify(nuevoProducto, null, 2));
+  const { name, price, desc, img, categoria } = newp;
+  
+  const sqlQuery = `
+    INSERT INTO productos (name, price, descripcion, img, categoria) 
+    VALUES ($1, $2, $3, $4, $5) 
+    RETURNING *
+  `;
+  const values = [name, price, desc, img, categoria];
+  const response = await pool.query(sqlQuery, values);
+  return response.rows[0];
+};
+
+const getProductosModels = async () => {
+  const sqlQuery = "SELECT * FROM productos";
+  const response = await pool.query(sqlQuery);
+  return response.rows;
 };
 
 
@@ -31,5 +56,6 @@ export const pizzaModel = {
   getPizzas,
   getPizza,
   BuscaProducto,
-  nuevoProducto
+  nuevoProducto,
+  getProductosModels
 };

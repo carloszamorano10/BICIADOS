@@ -13,6 +13,18 @@ function CardBici({ id, name, price, categoria, img }) {
     setIsLiked(favorites.some((item) => item.id === id));
   }, [favorites, id]);
 
+  const getCategoriasParaMostrar = () => {
+    if (!categoria) return ["Sin categoría"];
+
+    if (Array.isArray(categoria)) {
+      return categoria;
+    }
+
+    return [categoria];
+  };
+
+  const categoriasParaMostrar = getCategoriasParaMostrar();
+
   const handleAdd = async () => {
     setIsAdding(true);
     await new Promise((resolve) => setTimeout(resolve, 300));
@@ -87,7 +99,7 @@ function CardBici({ id, name, price, categoria, img }) {
         </button>
 
         <span className="position-absolute top-0 end-0 bg-success text-white px-2 py-1 rounded-bl">
-          ${price}
+          ${parseFloat(price || 0).toLocaleString("es-CL")}
         </span>
       </div>
 
@@ -102,7 +114,7 @@ function CardBici({ id, name, price, categoria, img }) {
         <div className="categoria mb-2 flex-grow-1">
           <h3 className="h6">Categoría:</h3>
           <ul className="list">
-            {categoria.map((ingredient, index) => (
+            {categoriasParaMostrar.map((ingredient, index) => (
               <li key={index} className="mb-1 d-flex align-items-center">
                 <span>
                   - {ingredient.charAt(0).toUpperCase()}
@@ -146,8 +158,15 @@ CardBici.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  categoria: PropTypes.arrayOf(PropTypes.string).isRequired,
+  categoria: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   img: PropTypes.string.isRequired,
+};
+
+CardBici.defaultProps = {
+  categoria: "Sin categoría",
 };
 
 export default CardBici;

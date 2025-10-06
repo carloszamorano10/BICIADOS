@@ -4,44 +4,109 @@ import { useNavigate, useParams } from "react-router-dom";
 const Bici = () => {
   const { id } = useParams();
   const navegar = useNavigate();
-  const volver = () => {
-    navegar("/");
-  };
-  console.log(id);
 
-  const [bicilist, setBicislist] = useState([]);
+  const [bici, setBici] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const getBicis = async () => {
-    const response = await fetch(`http://localhost:5000/api/pizzas/${id}`);
-    const data = await response.json();
-    console.log(data);
-    setBicislist(data);
+  const getBici = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      console.log("🔍 Buscando producto con ID:", id);
+
+      const response = await fetch(`http://localhost:5000/api/pizzas/${id}`);
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("📦 Datos recibidos del backend:", data);
+
+      // El backend devuelve { success: true, producto: {...} }
+      if (data.success && data.producto) {
+        setBici(data.producto);
+      } else {
+        setError("Producto no encontrado");
+      }
+    } catch (error) {
+      console.error("❌ Error al cargar el producto:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    getBicis();
-  }, []);
+    if (id) {
+      getBici();
+    }
+  }, [id]);
 
-  return (
-    <>
+  const volver = () => {
+    navegar("/");
+  };
+
+  if (loading) {
+    return (
       <div className="d-flex justify-content-center m-5">
-        <div className="card" style={{ width: "18rem" }}>
-          <img
-            src={bicilist.img}
-            className="card-img-top"
-            alt="imagen del producto seleccionado"
-          />
+        <div className="text-center">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Cargando...</span>
+          </div>
+          <p className="mt-2">Cargando producto...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !bici) {
+    return (
+      <div className="d-flex justify-content-center m-5">
+        <div className="card text-center">
           <div className="card-body">
-            <h5 className="card-title">{bicilist.name}</h5>
-            <h5 className="card-title">${bicilist.price}</h5>
-            <p className="card-text">{bicilist.desc}</p>
+            <h5 className="card-title text-danger">Error</h5>
+            <p className="card-text">{error || "Producto no encontrado"}</p>
             <button className="btn btn-primary" onClick={volver}>
-              Volver
+              Volver al inicio
             </button>
           </div>
         </div>
       </div>
-    </>
+    );
+  }
+
+  return (
+    <div className="d-flex justify-content-center m-5">
+      <div className="card" style={{ width: "24rem" }}>
+        <img
+          src={bici.img}
+          className="card-img-top"
+          alt={bici.titulo}
+          style={{ height: "300px", objectFit: "cover" }}
+          onError={(e) => {
+            e.target.src =
+              "https://via.placeholder.com/300x300?text=Imagen+no+disponible";
+          }}
+        />
+        <div className="card-body">
+          <h5 className="card-title">{bici.titulo}</h5>
+          <h5 className="card-title text-success">
+            ${parseFloat(bici.price || 0).toLocaleString("es-CL")}
+          </h5>
+          <p className="card-text">{bici.descripcion}</p>
+          <p className="card-text">
+            <small className="text-muted">
+              Categoría: {bici.categoria || "Sin categoría"}
+            </small>
+          </p>
+          <button className="btn btn-primary" onClick={volver}>
+            Volver al inicio
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

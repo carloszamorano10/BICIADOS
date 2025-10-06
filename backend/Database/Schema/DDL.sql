@@ -10,7 +10,7 @@ CREATE TABLE usuarios (
   password     VARCHAR(60)   NOT NULL,
   created_at   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
   updated_at   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
-  tipoUsuario  BOOLEAN       DEFAULT FALSE
+  tipoUsuario  VARCHAR(50)   NOT NULL
 );
 
 CREATE TABLE productos (
@@ -20,7 +20,9 @@ CREATE TABLE productos (
   stock       INT           NOT NULL DEFAULT 0,
   descripcion TEXT,
   created_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
-  updated_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
+  updated_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  img         VARCHAR(255),
+  categoria   VARCHAR(50)
 );
 
 CREATE TABLE publicaciones (
@@ -32,21 +34,20 @@ CREATE TABLE publicaciones (
   updated_at   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
   
   FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE,
-  FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 CREATE TABLE favoritos (
   id          SERIAL        PRIMARY KEY,
   id_producto INT           NOT NULL,
   id_usuario  INT           NOT NULL,
-  like        BOOLEAN       DEFAULT TRUE, 
+  es_like     BOOLEAN       DEFAULT TRUE, 
   created_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
   updated_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
-  
 
   FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE,
-  FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
-  );
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
+);
 
   CREATE TABLE ventas (
   id          SERIAL        PRIMARY KEY,
@@ -58,5 +59,5 @@ CREATE TABLE favoritos (
   
 
   FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE RESTRICT,
-  FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE RESTRICT
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE RESTRICT
 );

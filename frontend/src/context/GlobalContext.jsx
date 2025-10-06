@@ -50,71 +50,61 @@ const GlobalProvider = ({ children }) => {
 
   const navegar = useNavigate();
 
-  const handleRegisterProducto = async ( id, name, desc, price,img, categoria) => {
-  try {
-    console.log('esto trae');
-    console.log({ id, name, desc, price, img, categoria});
-    
-    const response = await fetch("http://localhost:5000/api/pizzas/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, name, desc, price, img, categoria }),
-    });
-
-    if (!response.ok) {
+  const handleRegisterProducto = async (name, desc, price, img, categoria) => {
+    try {
+      console.log('Datos a enviar:', { name, desc, price, img, categoria });
       
-      const errorText = await response.text();
-      console.error('Error en la respuesta del servidor:', response.status, errorText);
+      const response = await fetch("http://localhost:5000/api/pizzas/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, desc, price, img, categoria }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error en la respuesta:', response.status, errorText);
+        Swal.fire({
+          icon: "error",
+          title: `Error ${response.status}`,
+          text: errorText || "Error en la solicitud",
+        });
+        return false;
+      }
+
+      const data = await response.json();
+      console.log('✅ Producto creado:', data);
+
+      Swal.fire({
+        icon: "success",
+        text: "Producto registrado exitosamente",
+      });
+
+      // Actualizar la lista de productos
+      await getBicis();
+      navegar("/");
+      return true;
+
+    } catch (error) {
+      console.error('Error:', error);
       Swal.fire({
         icon: "error",
-        title: `Error ${response.status}`,
-        text: errorText || "Error en la solicitud",
+        title: "Error",
+        text: "Ocurrió un error al registrar el producto",
       });
       return false;
     }
+  };
 
-    const data = await response.json();
-    console.log('paso 1');
-    console.log(data);
-
-    if (data?.error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: `${data.error}`,
-      });
-      return false;
-    }
-
-    Swal.fire({
-      icon: "success",
-      text: "Registro exitoso",
-    });
-
-    navegar("/");
-    return true;
-
-  } catch (error) {
-    console.error('Error capturado en catch:', error);
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "Ocurrió un error al intentar registrar el producto",
-    });
-    return false;
-  }
-};
-
-  const handleLogin = async (email, password) => {
+  const handleLogin = async (email, password, nombre, apellido) => {
     try {
       const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, nombre, apellido }),
       });
 
       const data = await response.json();
-
+      console.log(data)
       if (data?.error) {
         Swal.fire({
           icon: "error",
@@ -126,11 +116,12 @@ const GlobalProvider = ({ children }) => {
 
       Swal.fire({
         icon: "success",
-        text: "Registro exitoso",
+        text: "Inicio de sesión exitoso",
       });
 
       localStorage.setItem("token", data.token);
       setUserIsLogged(true);
+      setUser(data.user); 
       navegar("/");
       return true;
     } catch (error) {
@@ -176,12 +167,15 @@ const GlobalProvider = ({ children }) => {
     }
   };
 
-  const handleRegister = async (email, password) => {
+
+  const handleRegister = async (nombre, apellido, email, password) => {
     try {
+      console.log('Registrando usuario:', { nombre, apellido, email });
+      
       const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ nombre, apellido, email, password }),
       });
 
       const data = await response.json();
@@ -199,8 +193,10 @@ const GlobalProvider = ({ children }) => {
         icon: "success",
         text: "Registro exitoso",
       });
+      
       localStorage.setItem("token", data.token);
       setUserIsLogged(true);
+      setUser(data.user); 
       navegar("/");
       return true;
     } catch (error) {
@@ -216,7 +212,7 @@ const GlobalProvider = ({ children }) => {
   const handleLogout2 = () => {
     Swal.fire({
       icon: "success",
-      text: "Logout exitoso, ¡nos vemos!",
+      text: "Sesión cerrada exitosamente",
     });
     localStorage.removeItem("token");
     setUser(null);
@@ -240,7 +236,7 @@ const GlobalProvider = ({ children }) => {
         handleLogin,
         fetchUserData,
         handleLogout2,
-        handleRegister,
+        handleRegister, 
         handleRegisterProducto
       }}
     >
