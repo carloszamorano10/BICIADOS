@@ -6,7 +6,7 @@ const create = async (req, res) => {
       user: req.user,
     });
   } catch (error) {
-    // console.log(error);
+
     return res.status(500).json({ error: "Server error" });
   }
 };
