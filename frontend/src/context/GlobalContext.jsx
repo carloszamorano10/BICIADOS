@@ -79,7 +79,7 @@ const GlobalProvider = ({ children }) => {
         text: "Producto registrado exitosamente",
       });
 
-      // Actualizar la lista de productos
+      // Actualiza la lista de productos
       await getBicis();
       navegar("/");
       return true;

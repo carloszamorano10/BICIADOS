@@ -33,8 +33,6 @@ const CreaPublicacion = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    
-    // Validar que price sea un número válido
     const priceNumber = Number(product.price);
     if (isNaN(priceNumber)) {
       alert("El precio debe ser un número válido");
@@ -44,7 +42,7 @@ const CreaPublicacion = () => {
     await handleRegisterProducto(
       product.name, 
       product.desc, 
-      priceNumber,  // Número, no string
+      priceNumber, 
       product.img, 
       product.categoria
     );
@@ -57,7 +55,7 @@ const CreaPublicacion = () => {
       <form className="formulario" onSubmit={handleSubmit}>
         <h2 className="text-center">Crear Publicación</h2>
 
-        {/** Nombre */}
+        {/** nombre */}
         <div className="fila">
           <div className="columna-label">
             <label htmlFor="nombre">Nombre</label>
@@ -67,7 +65,7 @@ const CreaPublicacion = () => {
           </div>
         </div>
 
-        {/** Precio */}
+        {/** precio */}
         <div className="fila">
           <div className="columna-label">
             <label htmlFor="precio">Precio</label>
@@ -85,7 +83,7 @@ const CreaPublicacion = () => {
           </div>
         </div>
 
-        {/** Descripción */}
+        {/** descripcion */}
         <div className="fila">
           <div className="columna-label">
             <label htmlFor="cantidad">Descripción</label>
@@ -95,7 +93,7 @@ const CreaPublicacion = () => {
           </div>
         </div>
 
-        {/** Categoría */}
+        {/** categoria */}
         <div className="fila">
           <div className="columna-label">
             <label htmlFor="categoria">Categoría</label>
@@ -105,7 +103,7 @@ const CreaPublicacion = () => {
           </div>
         </div>
 
-        {/** Imagen URL */}
+        {/** link foto */}
         <div className="fila">
           <div className="columna-label">
             <label htmlFor="categoria">URL img : </label>
