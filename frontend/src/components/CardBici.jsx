@@ -108,7 +108,7 @@ function CardBici({ id, name, price, categoria, img }) {
           className="card-title h5 text-truncate text-center mb-4"
           title={name}
         >
-          {name.toUpperCase()}
+          {name}
         </h2>
 
         <div className="categoria mb-2 flex-grow-1">
@@ -117,7 +117,7 @@ function CardBici({ id, name, price, categoria, img }) {
             {categoriasParaMostrar.map((ingredient, index) => (
               <li key={index} className="mb-1 d-flex align-items-center">
                 <span>
-                  - {ingredient.charAt(0).toUpperCase()}
+                  - {ingredient.charAt(0)}
                   {ingredient.slice(1)}
                 </span>
               </li>
