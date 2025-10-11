@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Cart = () => {
   const { carrito, setCarrito, user, userIsLogged } = useContext(GlobalContext);
@@ -45,7 +46,7 @@ const Cart = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/checkouts", {
+      const response = await fetch("${API_URL}/api/checkouts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

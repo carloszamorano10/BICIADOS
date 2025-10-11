@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Bici = () => {
   const { id } = useParams();
@@ -15,7 +16,7 @@ const Bici = () => {
       setError(null);
       console.log("🔍 Buscando producto con ID:", id);
 
-      const response = await fetch(`http://localhost:5000/api/pizzas/${id}`);
+      const response = await fetch(`${API_URL}/api/pizzas/${id}`);
 
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);

@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const GlobalContext = createContext();
 
@@ -35,7 +36,7 @@ const GlobalProvider = ({ children }) => {
   }, [favorites]);
 
   const getBicis = async () => {
-    const response = await fetch("http://localhost:5000/api/pizzas");
+    const response = await fetch("${API_URL}/api/pizzas");
     const data = await response.json();
     console.log(data);
     setBicislist(data);
@@ -54,7 +55,7 @@ const GlobalProvider = ({ children }) => {
     try {
       console.log('Datos a enviar:', { name, desc, price, img, categoria });
       
-      const response = await fetch("http://localhost:5000/api/pizzas/register", {
+      const response = await fetch("${API_URL}/api/pizzas/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, desc, price, img, categoria }),
@@ -97,7 +98,7 @@ const GlobalProvider = ({ children }) => {
 
   const handleLogin = async (email, password, nombre, apellido) => {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch("${API_URL}/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, nombre, apellido }),
@@ -141,7 +142,7 @@ const GlobalProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/me", {
+      const response = await fetch("${API_URL}/api/auth/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -172,7 +173,7 @@ const GlobalProvider = ({ children }) => {
     try {
       console.log('Registrando usuario:', { nombre, apellido, email });
       
-      const response = await fetch("http://localhost:5000/api/auth/register", {
+      const response = await fetch("${API_URL}/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nombre, apellido, email, password }),
