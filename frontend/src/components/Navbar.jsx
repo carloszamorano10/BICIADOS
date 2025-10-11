@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 
 function Navbar() {
-  const { totalCart, setDireccion, setUser, userIsLogged, setUserIsLogged, handleLogout2 } = useContext(GlobalContext);
+  const { totalCart, setDireccion, setUser, userIsLogged, setUserIsLogged, handleLogout2, admininistrador } = useContext(GlobalContext);
  
  
    const validaRoot = ({ isActive }) => isActive? "text-decoration-none text-warning" : "text-decoration-none text-light"
@@ -27,27 +27,29 @@ function Navbar() {
           <NavLink className={validaRoot} text-light aria-current="page" to="/favoritos">Mis Favoritos</NavLink>
         </li>
 
-        {userIsLogged ? 
-       <>
-       <li className="nav-item px-2">
-          <NavLink className={validaRoot} text-light to="/creaPublicacion">Crear Publicación</NavLink>
-        </li>
-       <li className="nav-item px-2">
-          <NavLink className={validaRoot} text-light to="/profile">🪪Profile</NavLink>
-        </li>
-        <li className="nav-item px-2">
-          <NavLink className={validaRoot} text-light onClick={handleLogout2}>🔓Log Out</NavLink>
-        </li>
-       </> :
-       <>
-       <li className="nav-item px-2">
-          <NavLink className={validaRoot} text-light to="/login">🔒Login</NavLink>
-        </li>
-        <li className="nav-item px-2">
-          <NavLink className={validaRoot} text-light to="/register">🔒Register</NavLink>
-        </li>
-       </>   
-    }
+      {userIsLogged ? 
+  <>
+    {admininistrador && admininistrador === "admin" && (
+      <li className="nav-item px-2">
+        <NavLink className={validaRoot} text-light to="/creaPublicacion">Crear Publicación</NavLink>
+      </li>
+    )}
+    <li className="nav-item px-2">
+      <NavLink className={validaRoot} text-light to="/profile">🪪Profile</NavLink>
+    </li>
+    <li className="nav-item px-2">
+      <NavLink className={validaRoot} text-light onClick={handleLogout2}>🔓Log Out</NavLink>
+    </li>
+  </> :
+  <>
+    <li className="nav-item px-2">
+      <NavLink className={validaRoot} text-light to="/login">🔒Login</NavLink>
+    </li>
+    <li className="nav-item px-2">
+      <NavLink className={validaRoot} text-light to="/register">🔒Register</NavLink>
+    </li>
+  </>   
+}
       </ul>
       
     </div>

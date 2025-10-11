@@ -89,7 +89,7 @@ const getProductoById = async (req, res) => {
     const { id } = req.params;
     console.log("🔍 Buscando producto con ID:", id);
     
-    const producto = await pizzaModel.getPizza(id); // Usa getPizza en lugar de getBici
+    const producto = await pizzaModel.getPizza(id);
     
     if (!producto) {
       return res.status(404).json({ 
@@ -112,6 +112,8 @@ const getProductoById = async (req, res) => {
     });
   }
 };
+
+
 
 export const pizzaController = {
   readPizzas,

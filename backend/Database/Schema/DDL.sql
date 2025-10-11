@@ -15,8 +15,8 @@ CREATE TABLE usuarios (
 
 CREATE TABLE productos (
   id          SERIAL        PRIMARY KEY,
-  titulo      VARCHAR(255)  NOT NULL,
-  precio      DECIMAL(10,2) NOT NULL,
+  name      VARCHAR(255)  NOT NULL,
+  price     DECIMAL(10,2) NOT NULL,
   stock       INT           NOT NULL DEFAULT 0,
   descripcion TEXT,
   created_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,

@@ -7,6 +7,7 @@ export const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
+  const [admininistrador, setAdmininistrador] = useState([]);
   const [favorites, setFavorites] = useState(() => {
     if (typeof window !== 'undefined') {
       try {
@@ -96,12 +97,12 @@ const GlobalProvider = ({ children }) => {
     }
   };
 
-  const handleLogin = async (email, password, nombre, apellido) => {
+  const handleLogin = async (email, password, nombre, apellido, tipoUsuario) => {
     try {
       const response = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, nombre, apellido }),
+        body: JSON.stringify({ email, password, nombre, apellido, tipoUsuario }),
       });
 
       const data = await response.json();
@@ -123,6 +124,8 @@ const GlobalProvider = ({ children }) => {
       localStorage.setItem("token", data.token);
       setUserIsLogged(true);
       setUser(data.user); 
+      setAdmininistrador(data.user.tipoUsuario); 
+       console.log("aca", data.user.tipoUsuario);
       navegar("/");
       return true;
     } catch (error) {
@@ -220,10 +223,14 @@ const GlobalProvider = ({ children }) => {
     setUserIsLogged(false);
   };
 
+
+  
+
   return (
     <GlobalContext.Provider
       value={{
         bicilist,
+        admininistrador,
         getBicis,
         carrito,
         setCarrito,

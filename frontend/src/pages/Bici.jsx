@@ -25,7 +25,6 @@ const Bici = () => {
       const data = await response.json();
       console.log("📦 Datos recibidos del backend:", data);
 
-      // El backend devuelve { success: true, producto: {...} }
       if (data.success && data.producto) {
         setBici(data.producto);
       } else {
