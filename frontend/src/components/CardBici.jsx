@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 function CardBici({ id, name, price, categoria, img }) {
-  const { setCarrito, favorites, setFavorites, admininistrador } = useContext(GlobalContext);
+  const { setCarrito, favorites, setFavorites, admininistrador, eliminarBici } = useContext(GlobalContext);
   const [isAdding, setIsAdding] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
@@ -150,7 +150,7 @@ function CardBici({ id, name, price, categoria, img }) {
           </button>
 
        {admininistrador && admininistrador === "admin" && (
-      <button className="btn btn-dark">
+      <button className="btn btn-dark"  onClick={() => eliminarBici(id)}>
             Eliminar
           </button>
     )}

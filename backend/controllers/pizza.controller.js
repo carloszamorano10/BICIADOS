@@ -113,7 +113,34 @@ const getProductoById = async (req, res) => {
   }
 };
 
-
+const deleteBici = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("🗑️ Eliminando producto con ID:", id);
+    
+    const productoEliminado = await pizzaModel.deleteBicisModels(id);
+    
+    if (!productoEliminado || productoEliminado.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Producto no encontrado"
+      });
+    }
+    
+    res.json({
+      success: true,
+      message: "Producto eliminado exitosamente",
+      producto: productoEliminado[0]
+    });
+    
+  } catch (error) {
+    console.error("❌ Error en deleteBici:", error);
+    res.status(500).json({
+      success: false,
+      error: "Error al eliminar el producto: " + error.message
+    });
+  }
+};
 
 export const pizzaController = {
   readPizzas,
@@ -121,7 +148,8 @@ export const pizzaController = {
   buscaproducto,
   register,
   getAllProductos,
-  getProductoById
+  getProductoById,
+  deleteBici
 };
 
-export { getAllProductos, getProductoById };
+export { getAllProductos, getProductoById, deleteBici };

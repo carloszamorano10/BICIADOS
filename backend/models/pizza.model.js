@@ -51,13 +51,19 @@ const getProductosModels = async () => {
   return response.rows;
 };
 
-
+const deleteBicisModels = async (id)=>{
+    const sqlQuery = "DELETE FROM productos WHERE id = $1 RETURNING *"
+    const values = [id]
+    const result = await pool.query(sqlQuery, values)
+    return result.rows
+}
 
 
 export const pizzaModel = {
   getPizzas,
   getPizza,
   BuscaProducto,
+  deleteBicisModels,
   nuevoProducto,
   getProductosModels
 };

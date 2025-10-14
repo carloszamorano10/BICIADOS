@@ -221,8 +221,47 @@ const GlobalProvider = ({ children }) => {
     localStorage.removeItem("token");
     setUser(null);
     setUserIsLogged(false);
+      setAdmininistrador(null);
+  getBicis();
   };
 
+  const eliminarBici = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+    
+    const response = await fetch(`${API_URL}/api/pizzas/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al eliminar la bicicleta");
+    }
+
+    const result = await response.json();
+    
+    Swal.fire({
+      icon: "success",
+      title: "Eliminado",
+      text: "Bicicleta eliminada exitosamente"
+    });
+
+    getBicis();
+    
+    return result;
+    
+  } catch (error) {
+    console.error("Error eliminando bicicleta:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "No se pudo eliminar la bicicleta"
+    });
+  }
+};
 
   
 
@@ -233,6 +272,7 @@ const GlobalProvider = ({ children }) => {
         admininistrador,
         getBicis,
         carrito,
+        eliminarBici,
         setCarrito,
         totalCart,
         user,
