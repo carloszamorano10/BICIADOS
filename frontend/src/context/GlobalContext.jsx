@@ -9,12 +9,12 @@ const GlobalProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
   const [admininistrador, setAdmininistrador] = useState([]);
   const [favorites, setFavorites] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       try {
-        const savedFavorites = localStorage.getItem('biciFavorites');
+        const savedFavorites = localStorage.getItem("biciFavorites");
         return savedFavorites ? JSON.parse(savedFavorites) : [];
       } catch (error) {
-        console.log('Error loading favorites from localStorage:', error);
+        console.log("Error loading favorites from localStorage:", error);
         return [];
       }
     }
@@ -25,13 +25,13 @@ const GlobalProvider = ({ children }) => {
   const [userIsLogged, setUserIsLogged] = useState(() => {
     return Boolean(localStorage.getItem("token"));
   });
-  
+
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       try {
-        localStorage.setItem('biciFavorites', JSON.stringify(favorites));
+        localStorage.setItem("biciFavorites", JSON.stringify(favorites));
       } catch (error) {
-        console.log('Error saving favorites to localStorage:', error);
+        console.log("Error saving favorites to localStorage:", error);
       }
     }
   }, [favorites]);
@@ -54,8 +54,8 @@ const GlobalProvider = ({ children }) => {
 
   const handleRegisterProducto = async (name, desc, price, img, categoria) => {
     try {
-      console.log('Datos a enviar:', { name, desc, price, img, categoria });
-      
+      console.log("Datos a enviar:", { name, desc, price, img, categoria });
+
       const response = await fetch(`${API_URL}/api/pizzas/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -64,7 +64,7 @@ const GlobalProvider = ({ children }) => {
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Error en la respuesta:', response.status, errorText);
+        console.error("Error en la respuesta:", response.status, errorText);
         Swal.fire({
           icon: "error",
           title: `Error ${response.status}`,
@@ -74,7 +74,7 @@ const GlobalProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      console.log('✅ Producto creado:', data);
+      console.log("✅ Producto creado:", data);
 
       Swal.fire({
         icon: "success",
@@ -85,9 +85,8 @@ const GlobalProvider = ({ children }) => {
       await getBicis();
       navegar("/");
       return true;
-
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -97,16 +96,28 @@ const GlobalProvider = ({ children }) => {
     }
   };
 
-  const handleLogin = async (email, password, nombre, apellido, tipoUsuario) => {
+  const handleLogin = async (
+    email,
+    password,
+    nombre,
+    apellido,
+    tipoUsuario
+  ) => {
     try {
       const response = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, nombre, apellido, tipoUsuario }),
+        body: JSON.stringify({
+          email,
+          password,
+          nombre,
+          apellido,
+          tipoUsuario,
+        }),
       });
 
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       if (data?.error) {
         Swal.fire({
           icon: "error",
@@ -123,9 +134,9 @@ const GlobalProvider = ({ children }) => {
 
       localStorage.setItem("token", data.token);
       setUserIsLogged(true);
-      setUser(data.user); 
-      setAdmininistrador(data.user.tipoUsuario); 
-       console.log("aca", data.user.tipoUsuario);
+      setUser(data.user);
+      setAdmininistrador(data.user.tipoUsuario);
+      console.log("aca", data.user.tipoUsuario);
       navegar("/");
       return true;
     } catch (error) {
@@ -171,11 +182,10 @@ const GlobalProvider = ({ children }) => {
     }
   };
 
-
   const handleRegister = async (nombre, apellido, email, password) => {
     try {
-      console.log('Registrando usuario:', { nombre, apellido, email });
-      
+      console.log("Registrando usuario:", { nombre, apellido, email });
+
       const response = await fetch(`${API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -197,10 +207,10 @@ const GlobalProvider = ({ children }) => {
         icon: "success",
         text: "Registro exitoso",
       });
-      
+
       localStorage.setItem("token", data.token);
       setUserIsLogged(true);
-      setUser(data.user); 
+      setUser(data.user);
       navegar("/");
       return true;
     } catch (error) {
@@ -212,7 +222,7 @@ const GlobalProvider = ({ children }) => {
       return false;
     }
   };
- 
+
   const handleLogout2 = () => {
     Swal.fire({
       icon: "success",
@@ -221,49 +231,46 @@ const GlobalProvider = ({ children }) => {
     localStorage.removeItem("token");
     setUser(null);
     setUserIsLogged(false);
-      setAdmininistrador(null);
-  getBicis();
+    setAdmininistrador(null);
+    getBicis();
   };
 
   const eliminarBici = async (id) => {
-  try {
-    const token = localStorage.getItem("token");
-    
-    const response = await fetch(`${API_URL}/api/pizzas/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(`${API_URL}/api/pizzas/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al eliminar la bicicleta");
       }
-    });
 
-    if (!response.ok) {
-      throw new Error("Error al eliminar la bicicleta");
+      const result = await response.json();
+
+      Swal.fire({
+        icon: "success",
+        title: "Eliminado",
+        text: "Bicicleta eliminada exitosamente",
+      });
+
+      getBicis();
+
+      return result;
+    } catch (error) {
+      console.error("Error eliminando bicicleta:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo eliminar la bicicleta",
+      });
     }
-
-    const result = await response.json();
-    
-    Swal.fire({
-      icon: "success",
-      title: "Eliminado",
-      text: "Bicicleta eliminada exitosamente"
-    });
-
-    getBicis();
-    
-    return result;
-    
-  } catch (error) {
-    console.error("Error eliminando bicicleta:", error);
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "No se pudo eliminar la bicicleta"
-    });
-  }
-};
-
-  
+  };
 
   return (
     <GlobalContext.Provider
@@ -284,8 +291,8 @@ const GlobalProvider = ({ children }) => {
         handleLogin,
         fetchUserData,
         handleLogout2,
-        handleRegister, 
-        handleRegisterProducto
+        handleRegister,
+        handleRegisterProducto,
       }}
     >
       {children}
