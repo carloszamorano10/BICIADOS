@@ -142,6 +142,59 @@ const deleteBici = async (req, res) => {
   }
 };
 
+const creaFav = async (req, res) => {
+  try {
+    const { id_producto, id_usuario } = req.body;
+    
+    const newFav = await pizzaModel.favBici(id_producto, id_usuario);
+    res.status(201).json(newFav);
+  } catch (error) {
+    console.log("error =>", error);
+    res.status(500).json({ error: "Error al crear favorito" });
+  }
+};
+
+const getAllFav = async (req, res) => {
+  try {
+    const { id_usuario } = req.params; 
+    const productos = await pizzaModel.getBicisFav(id_usuario);
+    res.json(productos);
+  } catch (error) {
+    console.log("error =>", error);
+    res.status(500).json({ error: "Error al obtener productos favoritos" });
+  }
+};
+
+const deleteFav = async (req, res) => {
+  try {
+    const { id_producto, id_usuario } = req.params;
+    
+    console.log("🗑️ Eliminando favorito:", { id_producto, id_usuario });
+    
+    const favoritoEliminado = await pizzaModel.deleteFavorito(id_producto, id_usuario);
+    
+    if (!favoritoEliminado) {
+      return res.status(404).json({
+        success: false,
+        message: "Favorito no encontrado"
+      });
+    }
+    
+    res.json({
+      success: true,
+      message: "Favorito eliminado exitosamente",
+      data: favoritoEliminado
+    });
+    
+  } catch (error) {
+    console.error("❌ Error en deleteFav:", error);
+    res.status(500).json({
+      success: false,
+      error: "Error al eliminar el favorito: " + error.message
+    });
+  }
+};
+
 export const pizzaController = {
   readPizzas,
   readPizza,
@@ -149,7 +202,10 @@ export const pizzaController = {
   register,
   getAllProductos,
   getProductoById,
-  deleteBici
+  deleteBici,
+  creaFav,
+  getAllFav,
+  deleteFav
 };
 
-export { getAllProductos, getProductoById, deleteBici };
+export { getAllProductos, getProductoById, deleteBici, creaFav, getAllFav, deleteFav };

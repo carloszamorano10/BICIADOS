@@ -4,14 +4,15 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 function CardBici({ id, name, price, categoria, img }) {
-  const { setCarrito, favorites, setFavorites, admininistrador, eliminarBici } = useContext(GlobalContext);
+  const { setCarrito, favorites, setFavorites, admininistrador, eliminarBici, userIsLogged, user, agregarFavorites, eliminarFavorites, isFavorite} = useContext(GlobalContext);
   const [isAdding, setIsAdding] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setIsLiked(favorites.some((item) => item.id === id));
+useEffect(() => {
+    setIsLiked(favorites.includes(id));
   }, [favorites, id]);
+
 
   const getCategoriasParaMostrar = () => {
     if (!categoria) return ["Sin categoría"];
@@ -59,6 +60,27 @@ function CardBici({ id, name, price, categoria, img }) {
     navigate(`/bici/${id}`);
   };
 
+// favorito
+
+const handleFavoriteClick = async () => {
+    if (!userIsLogged) {
+      Swal.fire({
+        icon: "warning",
+        title: "Inicia sesión",
+        text: "Debes iniciar sesión para agregar favoritos",
+      });
+      return;
+    }
+    
+    if (isFavorite(id)) {
+      await eliminarFavorites(id);
+    } else {
+      await agregarFavorites(id);
+    }
+  };
+
+
+
   return (
     <div className="Bici-card card h-100 shadow-sm hover-shadow">
       <div className="card-img-top position-relative">
@@ -81,8 +103,8 @@ function CardBici({ id, name, price, categoria, img }) {
             cursor: "pointer",
             boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
           }}
-          onClick={btnFav}
-          aria-label={isLiked ? "Quitar de favoritos" : "Agregar a favoritos"}
+          onClick={handleFavoriteClick}
+          aria-label={isFavorite(id) ? "❤️ Quitar" : "🤍 Agregar"}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

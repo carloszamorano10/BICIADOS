@@ -21,6 +21,7 @@ const GlobalProvider = ({ children }) => {
     return [];
   });
   const [bicilist, setBicislist] = useState([]);
+  const [biciFav, setBicisFav] = useState([]);
   const [user, setUser] = useState("");
   const [userIsLogged, setUserIsLogged] = useState(() => {
     return Boolean(localStorage.getItem("token"));
@@ -81,7 +82,6 @@ const GlobalProvider = ({ children }) => {
         text: "Producto registrado exitosamente",
       });
 
-      // Actualiza la lista de productos
       await getBicis();
       navegar("/");
       return true;
@@ -272,6 +272,159 @@ const GlobalProvider = ({ children }) => {
     }
   };
 
+
+//favoritos!
+
+const agregarFavorites = async (id_producto) => {
+  try {
+    const token = localStorage.getItem("token");
+    
+    if (!token) {
+      Swal.fire({
+        icon: "warning",
+        title: "Inicia sesión",
+        text: "Debes iniciar sesión para agregar favoritos",
+      });
+      return false;
+    }
+
+    if (!user || !user.id) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo identificar al usuario",
+      });
+      return false;
+    }
+
+    const response = await fetch(`${API_URL}/api/pizzas/favs`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        id_producto: id_producto, 
+        id_usuario: user.id        
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Error al agregar favorito");
+    }
+
+    const data = await response.json();
+    
+    setFavorites(prevFavorites => {
+      const newFavorites = [...prevFavorites, id_producto];
+      return newFavorites;
+    });
+
+    Swal.fire({
+      icon: "success",
+      title: "¡Agregado!",
+      text: "Producto agregado a favoritos",
+      timer: 1500,
+      showConfirmButton: false
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Error adding to favorites:", error);
+    
+    if (error.message.includes("ya existe")) {
+      Swal.fire({
+        icon: "info",
+        title: "Ya en favoritos",
+        text: "Este producto ya está en tus favoritos",
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message || "No se pudo agregar a favoritos",
+      });
+    }
+    return false;
+  }
+};
+
+const isFavorite = (id_producto) => {
+  return favorites.includes(id_producto);
+};
+
+const eliminarFavorites = async (id_producto) => {
+  try {
+    const token = localStorage.getItem("token");
+    
+    if (!token || !user || !user.id) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo identificar al usuario",
+      });
+      return false;
+    }
+
+    const response = await fetch(`${API_URL}/api/pizzas/favs/${id_producto}/${user.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al eliminar favorito");
+    }
+
+    setFavorites(prevFavorites => 
+      prevFavorites.filter(id => id !== id_producto)
+    );
+
+    Swal.fire({
+      icon: "success",
+      title: "Eliminado",
+      text: "Producto eliminado de favoritos",
+      timer: 1500,
+      showConfirmButton: false
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Error removing from favorites:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "No se pudo eliminar de favoritos",
+    });
+    return false;
+  }
+};
+
+const getFavBicis = async () => {
+  try {
+    if (!user || !user.id) {
+      console.log("No hay usuario logueado para cargar favoritos");
+      setBicisFav([]);
+      return;
+    }
+
+    const response = await fetch(`${API_URL}/api/pizzas/favs/${user.id}`);
+    
+    if (!response.ok) {
+      throw new Error("Error al cargar favoritos");
+    }
+    
+    const data = await response.json();
+    console.log("Favoritos cargados:", data);
+    setBicisFav(data);
+  } catch (error) {
+    console.error("Error cargando favoritos:", error);
+    setBicisFav([]);
+  }
+};
+
   return (
     <GlobalContext.Provider
       value={{
@@ -293,6 +446,11 @@ const GlobalProvider = ({ children }) => {
         handleLogout2,
         handleRegister,
         handleRegisterProducto,
+        agregarFavorites,
+        isFavorite,
+        eliminarFavorites,
+        getFavBicis,
+        biciFav
       }}
     >
       {children}

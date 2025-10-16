@@ -58,6 +58,43 @@ const deleteBicisModels = async (id)=>{
     return result.rows
 }
 
+const favBici = async (id_producto, id_usuario) => {
+    try {
+        const sqlQuery = "INSERT INTO favoritos (id_producto, id_usuario) VALUES ($1, $2) RETURNING *" 
+        const values = [id_producto, id_usuario]
+        const result = await pool.query(sqlQuery, values)
+        return result.rows[0] 
+    } catch (error) {
+        console.error('Error al agregar favorito:', error)
+    }
+}
+
+const getBicisFav = async (id_usuario) => {
+  const sqlQuery = `
+    SELECT p.*, f.* 
+    FROM productos p 
+    INNER JOIN favoritos f ON p.id = f.id_producto 
+    WHERE f.id_usuario = $1
+  `;
+  const response = await pool.query(sqlQuery, [id_usuario]);
+  return response.rows;
+};
+
+const deleteFavorito = async (id_producto, id_usuario) => {
+  try {
+    const sqlQuery = `
+      DELETE FROM favoritos 
+      WHERE id_producto = $1 AND id_usuario = $2 
+      RETURNING *
+    `;
+    const values = [id_producto, id_usuario];
+    const result = await pool.query(sqlQuery, values);
+    return result.rows[0]; 
+  } catch (error) {
+    console.error('Error al eliminar favorito:', error);
+    throw error;
+  }
+};
 
 export const pizzaModel = {
   getPizzas,
@@ -65,5 +102,8 @@ export const pizzaModel = {
   BuscaProducto,
   deleteBicisModels,
   nuevoProducto,
-  getProductosModels
+  getProductosModels,
+  favBici,
+  getBicisFav,
+  deleteFavorito
 };
