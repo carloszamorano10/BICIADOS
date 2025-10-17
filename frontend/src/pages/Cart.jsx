@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Cart = () => {
-  const { carrito, setCarrito, user, userIsLogged } = useContext(GlobalContext);
+  const { carrito, setCarrito, user, userIsLogged, GrabaVentas, setVentas } = useContext(GlobalContext);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -68,6 +68,24 @@ const Cart = () => {
         text: "Tu pedido ha sido realizado con éxito. Gracias por tu compra.",
         confirmButtonText: "Aceptar",
       });
+      const cantidadTotal = carrito.reduce((acc, item) => acc + (item.quantity || 1), 0);
+       const codigousuario = localStorage.getItem("codigousuario");
+      setVentas({id_producto: '1',
+        id_usuario:codigousuario,
+        cantidad:cantidadTotal
+      })
+
+      const id_producto = '1';
+      const id_usuario = codigousuario;
+      const cantidad   = cantidadTotal;
+
+      setVentas({ id_producto,  id_usuario, cantidad });
+
+      console.log("lo que grabara venta", {total,
+        usuario:user?.email||'invitado',
+        cantidad_items:cantidadTotal
+      })  
+      await GrabaVentas(1, id_usuario, total)
       setCarrito([]);
       navigate("/");
     } catch (error) {
@@ -140,10 +158,7 @@ const Cart = () => {
                     <div className="d-flex justify-content-between align-items-start">
                       <div>
                         <h2 className="h5 card-title mb-1">{Bici.name}</h2>
-                        <p className="text-muted small mb-2">
-                          {Bici.categoria.slice(0, 3).join(", ")}
-                          {Bici.categoria.length > 3 && "..."}
-                        </p>
+
                       </div>
                       <button
                         onClick={() =>

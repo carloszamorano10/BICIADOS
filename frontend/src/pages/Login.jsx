@@ -8,7 +8,6 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const {handleLogin} = useContext(GlobalContext);
-
     const handleSubmit = async (e) =>{
          e.preventDefault();
          await handleLogin(email, password);  
@@ -45,7 +44,7 @@ const Login = () => {
        
             
         </div>
-        <button onClick={handleSubmit} class="btn btn-primary">Enviar</button>
+       <button onClick={handleSubmit} class="btn btn-success">Enviar</button>
 
     </div>
     

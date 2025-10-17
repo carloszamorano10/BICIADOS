@@ -12,7 +12,7 @@ export const Profile = () => {
     const loadUser = async () => {
       const userData = await fetchUserData();
       if (!userData) {
-        navigate("/login");
+        navigate("/");
       }
     };
     

@@ -44,17 +44,6 @@ useEffect(() => {
     setIsAdding(false);
   };
 
-  const btnFav = () => {
-    setFavorites((prevFavorites) => {
-      const isCurrentlyLiked = prevFavorites.some((item) => item.id === id);
-
-      if (isCurrentlyLiked) {
-        return prevFavorites.filter((item) => item.id !== id);
-      } else {
-        return [...prevFavorites, { id, name, price, categoria, img }];
-      }
-    });
-  };
 
   const irBici = () => {
     navigate(`/bici/${id}`);

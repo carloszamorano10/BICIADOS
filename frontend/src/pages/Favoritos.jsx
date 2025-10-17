@@ -1,16 +1,17 @@
-import React, { useContext, useEffect } from "react"; // ✅ Agregar useEffect
+import React, { useContext, useEffect } from "react"; 
 import { GlobalContext } from "../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import CardBici from "../components/CardBici";
 
 function Favoritos() {
   const navigate = useNavigate();
-  const { biciFav, getFavBicis, userIsLogged } = useContext(GlobalContext);
+  const { biciFav, getFavBicis, userIsLogged} = useContext(GlobalContext);
 
   useEffect(() => {
     getFavBicis();
   }, [getFavBicis]); 
 
+    
 
   if (!userIsLogged) {
     return (

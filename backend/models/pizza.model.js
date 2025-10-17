@@ -96,6 +96,7 @@ const deleteFavorito = async (id_producto, id_usuario) => {
   }
 };
 
+
 export const pizzaModel = {
   getPizzas,
   getPizza,

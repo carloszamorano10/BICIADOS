@@ -8,6 +8,7 @@ export const GlobalContext = createContext();
 const GlobalProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
   const [admininistrador, setAdmininistrador] = useState([]);
+  const [ventas, setVentas] = useState({});
   const [favorites, setFavorites] = useState(() => {
     if (typeof window !== "undefined") {
       try {
@@ -51,7 +52,7 @@ const GlobalProvider = ({ children }) => {
 
   const totalCart = subtotal;
 
-  const navegar = useNavigate();
+   const navegar = useNavigate();
 
   const handleRegisterProducto = async (name, desc, price, img, categoria) => {
     try {
@@ -136,8 +137,10 @@ const GlobalProvider = ({ children }) => {
       setUserIsLogged(true);
       setUser(data.user);
       setAdmininistrador(data.user.tipoUsuario);
-      console.log("aca", data.user.tipoUsuario);
       navegar("/");
+      console.log("aca", data);
+      localStorage.setItem("codigousuario", data.user.id);
+  
       return true;
     } catch (error) {
       Swal.fire({
@@ -425,6 +428,92 @@ const getFavBicis = async () => {
   }
 };
 
+// ventas 
+const handleRegisterVentas = async (id_producto, id_usuario, cantidad) => {
+  try {
+    console.log('esto trae');
+    console.log({ id_producto, id_usuario, cantidad });
+
+    const response = await fetch(`${API_URL}/api/ventas/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id_producto, id_usuario, cantidad }),
+    });
+
+    if (!response.ok) {
+
+      const errorText = await response.text();
+      console.error('Error en la respuesta del servidor:', response.status, errorText);
+      Swal.fire({
+        icon: "error",
+        title: Error `${response.status}`,
+        text: errorText || "Error en la solicitud",
+      });
+      return false;
+    }
+
+    const data = await response.json();
+    console.log('paso 1');
+    console.log(data);
+
+    if (data?.error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${data.error}`,
+      });
+      return false;
+    }
+
+    Swal.fire({
+      icon: "success",
+      text: "Registro exitoso",
+    });
+
+    await getBicis();
+    return true;
+
+  } catch (error) {
+    console.error('Error capturado en catch:', error);
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Ocurrió un error al intentar registrar el producto",
+    });
+    return false;
+  }
+};
+
+
+const getlasventas = async () => {
+  const response = await fetch(`${API_URL}/api/ventas`);
+  const data = await response.json();
+  console.log('rescata las Ventas', data);
+  setVentas(data); 
+};
+
+  const GrabaVentas = async (id_producto, id_usuario, cantidad) => {
+  if (!ventas || !id_producto || !id_usuario || !cantidad) {
+    console.warn("⚠️ Datos incompletos para grabar la venta:", ventas);
+    return;
+  }
+
+  try {
+    console.log("📦 Ventas que voy a grabar:", ventas);
+
+    await handleRegisterVentas(
+      id_producto,
+      id_usuario,
+      cantidad
+    );
+
+    console.log("✅ Venta registrada correctamente");
+  } catch (error) {
+    console.error("❌ Error al registrar venta:", error);
+  }
+};
+
+
   return (
     <GlobalContext.Provider
       value={{
@@ -450,7 +539,11 @@ const getFavBicis = async () => {
         isFavorite,
         eliminarFavorites,
         getFavBicis,
-        biciFav
+        biciFav,
+        getlasventas,
+        GrabaVentas,
+        ventas, 
+        setVentas
       }}
     >
       {children}

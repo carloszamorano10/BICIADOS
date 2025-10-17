@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
 import Favoritos from "./pages/Favoritos";
 import Bici from "./pages/Bici";
+import Ventas from "./pages/Ventas";
 import { Profile } from "./components/Profile";
 import { NotFound } from "./components/NotFound";
 import { GlobalContext } from "./context/GlobalContext";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/favoritos" element={<Favoritos />}/>
         <Route path="/products" element={<Products />}/>
         <Route path="/creaPublicacion" element={<Creapublicacion />}/>
+        <Route path="/ventas" element={<Ventas />}/>
         <Route path="/bici/:id" element={<Bici />}/>
         <Route path="/profile" 
         element={userIsLogged ? <Profile /> : <Navigate to={"/login"}></Navigate>}/>

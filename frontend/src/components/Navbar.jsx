@@ -32,7 +32,9 @@ function Navbar() {
     {admininistrador && admininistrador === "admin" && (
       <li className="nav-item px-2">
         <NavLink className={validaRoot} text-light to="/creaPublicacion">Crear Publicación</NavLink>
+        <NavLink className={validaRoot} to="/ventas"> 📊 Ventas</NavLink>
       </li>
+      
     )}
     <li className="nav-item px-2">
       <NavLink className={validaRoot} text-light to="/profile">🪪Profile</NavLink>
