@@ -1,33 +1,33 @@
-import { pizzaModel } from "../models/pizza.model.js";
+import { biciModel } from "../models/bici.model.js";
 
-const readPizzas = async (req, res) => {
+const readBicis = async (req, res) => {
   try {
-    const pizzas = await pizzaModel.getPizzas();
-    res.json(pizzas);
+    const bicis = await biciModel.getBicis();
+    res.json(bicis);
   } catch (error) {
-    console.error("Error en readPizzas:", error);
+    console.error("Error en readbicis:", error);
     res.status(500).json({ error: "Error al obtener productos" });
   }
 };
 
-const readPizza = async (req, res) => {
+const readBici = async (req, res) => {
   try {
     const { id } = req.params;
     console.log("🔍 Buscando producto con ID:", id);
     
-    const pizza = await pizzaModel.getPizza(id);
+    const bici = await biciModel.getBici(id);
     
-    if (!pizza) {
+    if (!bici) {
       return res.status(404).json({ 
         success: false,
         message: "Producto no encontrado" 
       });
     }
     
-    res.json(pizza);
+    res.json(bici);
     
   } catch (error) {
-    console.error("Error en readPizza:", error);
+    console.error("Error en readBici:", error);
     res.status(500).json({ error: "Error al buscar producto" });
   }
 };
@@ -35,7 +35,7 @@ const readPizza = async (req, res) => {
 const buscaproducto = async (req, res) => {
   try {
     const { id } = req.params;
-    const producto = await pizzaModel.BuscaProducto(id);
+    const producto = await biciModel.BuscaProducto(id);
     
     if (!producto) {
       return res.status(404).json({ message: "Producto no encontrado" });
@@ -61,7 +61,7 @@ const register = async (req, res) => {
     const newProducto = { name, price, desc, img, categoria };
     console.log("Datos a guardar:", newProducto);
 
-    const productoGuardado = await pizzaModel.nuevoProducto(newProducto);
+    const productoGuardado = await biciModel.nuevoProducto(newProducto);
     
     return res.status(201).json({
       message: "Producto creado exitosamente",
@@ -76,7 +76,7 @@ const register = async (req, res) => {
 
 const getAllProductos = async (req, res) => {
   try {
-    const productos = await pizzaModel.getProductosModels();
+    const productos = await biciModel.getProductosModels();
     res.json(productos);
   } catch (error) {
     console.log("error =>", error);
@@ -89,7 +89,7 @@ const getProductoById = async (req, res) => {
     const { id } = req.params;
     console.log("🔍 Buscando producto con ID:", id);
     
-    const producto = await pizzaModel.getPizza(id);
+    const producto = await biciModel.getBici(id);
     
     if (!producto) {
       return res.status(404).json({ 
@@ -118,7 +118,7 @@ const deleteBici = async (req, res) => {
     const { id } = req.params;
     console.log("🗑️ Eliminando producto con ID:", id);
     
-    const productoEliminado = await pizzaModel.deleteBicisModels(id);
+    const productoEliminado = await biciModel.deleteBicisModels(id);
     
     if (!productoEliminado || productoEliminado.length === 0) {
       return res.status(404).json({
@@ -146,7 +146,7 @@ const creaFav = async (req, res) => {
   try {
     const { id_producto, id_usuario } = req.body;
     
-    const newFav = await pizzaModel.favBici(id_producto, id_usuario);
+    const newFav = await biciModel.favBici(id_producto, id_usuario);
     res.status(201).json(newFav);
   } catch (error) {
     console.log("error =>", error);
@@ -157,7 +157,7 @@ const creaFav = async (req, res) => {
 const getAllFav = async (req, res) => {
   try {
     const { id_usuario } = req.params; 
-    const productos = await pizzaModel.getBicisFav(id_usuario);
+    const productos = await biciModel.getBicisFav(id_usuario);
     res.json(productos);
   } catch (error) {
     console.log("error =>", error);
@@ -171,7 +171,7 @@ const deleteFav = async (req, res) => {
     
     console.log("🗑️ Eliminando favorito:", { id_producto, id_usuario });
     
-    const favoritoEliminado = await pizzaModel.deleteFavorito(id_producto, id_usuario);
+    const favoritoEliminado = await biciModel.deleteFavorito(id_producto, id_usuario);
     
     if (!favoritoEliminado) {
       return res.status(404).json({
@@ -195,9 +195,9 @@ const deleteFav = async (req, res) => {
   }
 };
 
-export const pizzaController = {
-  readPizzas,
-  readPizza,
+export const biciController = {
+  readBicis,
+  readBici,
   buscaproducto,
   register,
   getAllProductos,

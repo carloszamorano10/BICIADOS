@@ -39,7 +39,7 @@ const GlobalProvider = ({ children }) => {
   }, [favorites]);
 
   const getBicis = async () => {
-    const response = await fetch(`${API_URL}/api/pizzas`);
+    const response = await fetch(`${API_URL}/api/bicis`);
     const data = await response.json();
     console.log(data);
     setBicislist(data);
@@ -58,7 +58,7 @@ const GlobalProvider = ({ children }) => {
     try {
       console.log("Datos a enviar:", { name, desc, price, img, categoria });
 
-      const response = await fetch(`${API_URL}/api/pizzas/register`, {
+      const response = await fetch(`${API_URL}/api/bicis/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, desc, price, img, categoria }),
@@ -242,7 +242,7 @@ const GlobalProvider = ({ children }) => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(`${API_URL}/api/pizzas/${id}`, {
+      const response = await fetch(`${API_URL}/api/bicis/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -300,7 +300,7 @@ const agregarFavorites = async (id_producto) => {
       return false;
     }
 
-    const response = await fetch(`${API_URL}/api/pizzas/favs`, {
+    const response = await fetch(`${API_URL}/api/bicis/favs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -370,7 +370,7 @@ const eliminarFavorites = async (id_producto) => {
       return false;
     }
 
-    const response = await fetch(`${API_URL}/api/pizzas/favs/${id_producto}/${user.id}`, {
+    const response = await fetch(`${API_URL}/api/bicis/favs/${id_producto}/${user.id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -413,7 +413,7 @@ const getFavBicis = async () => {
       return;
     }
 
-    const response = await fetch(`${API_URL}/api/pizzas/favs/${user.id}`);
+    const response = await fetch(`${API_URL}/api/bicis/favs/${user.id}`);
     
     if (!response.ok) {
       throw new Error("Error al cargar favoritos");

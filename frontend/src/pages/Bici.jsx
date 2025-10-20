@@ -16,7 +16,7 @@ const Bici = () => {
       setError(null);
       console.log("🔍 Buscando producto con ID:", id);
 
-      const response = await fetch(`${API_URL}/api/pizzas/${id}`);
+      const response = await fetch(`${API_URL}/api/bicis/${id}`);
 
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);

@@ -1,13 +1,13 @@
 import pool from "../Database/config.js"
 
 
-const getPizzas = async () => {
+const getBicis = async () => {
   const sqlQuery = "SELECT * FROM productos";
   const response = await pool.query(sqlQuery);
   return response.rows;
 };
 
-const getPizza = async (id) => {
+const getBici = async (id) => {
   try {
     console.log("🔍 Buscando en BD producto con ID:", id);
     const productId = parseInt(id);
@@ -23,13 +23,13 @@ const getPizza = async (id) => {
     return response.rows[0];
     
   } catch (error) {
-    console.error("❌ Error en getPizza model:", error);
+    console.error("❌ Error en getBici model:", error);
     throw error;
   }
 };
 
 const BuscaProducto = async (id) => {
-  return await getPizza(id);
+  return await getBici(id);
 };
 
 const nuevoProducto = async (newp) => {
@@ -97,9 +97,9 @@ const deleteFavorito = async (id_producto, id_usuario) => {
 };
 
 
-export const pizzaModel = {
-  getPizzas,
-  getPizza,
+export const biciModel = {
+  getBicis,
+  getBici,
   BuscaProducto,
   deleteBicisModels,
   nuevoProducto,

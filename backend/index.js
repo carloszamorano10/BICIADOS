@@ -4,7 +4,7 @@ import express from "express";
 
 import authRoute from "./routes/auth.route.js";
 import checkoutRoute from "./routes/checkout.route.js";
-import pizzaRoute from "./routes/pizza.route.js";
+import biciRoute from "./routes/bici.route.js";
 import ventasRoute from "./routes/ventas.route.js";
 
 
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/auth", authRoute);
-app.use("/api/pizzas", pizzaRoute);
+app.use("/api/bicis", biciRoute);
 app.use("/api/checkouts", checkoutRoute);
 app.use("/api/ventas", ventasRoute);
 app.use((_, res) => {
