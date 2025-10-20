@@ -31,74 +31,33 @@ const Footer = () => {
             <h6 className="fw-bold mb-3">ENLACES RÁPIDOS</h6>
             <ul className="list-unstyled">
               <li className="mb-2">
-                <a href="#home" className="text-secondary text-decoration-none">
-                  Inicio
+                <a href="/home" className="text-secondary text-decoration-none">
+                  Home
+                </a>
+              </li>
+              <li className="mb-2">
+                
+              </li>
+              <li className="mb-2">
+                <a
+                  href="/register"
+                  className="text-secondary text-decoration-none"
+                >
+                  Register
                 </a>
               </li>
               <li className="mb-2">
                 <a
-                  href="#products"
+                  href="/login"
                   className="text-secondary text-decoration-none"
                 >
-                  Productos
-                </a>
-              </li>
-              <li className="mb-2">
-                <a
-                  href="#about"
-                  className="text-secondary text-decoration-none"
-                >
-                  Crear Cuenta
-                </a>
-              </li>
-              <li className="mb-2">
-                <a
-                  href="#contact"
-                  className="text-secondary text-decoration-none"
-                >
-                  Contacto
+                  Login
                 </a>
               </li>
             </ul>
           </div>
 
-          <div className="col-md-3 mb-4">
-            <h6 className="fw-bold mb-3">CATEGORÍAS</h6>
-            <ul className="list-unstyled">
-              <li className="mb-2">
-                <a
-                  href="#road-bikes"
-                  className="text-secondary text-decoration-none"
-                >
-                  Bicicletas de Ruta
-                </a>
-              </li>
-              <li className="mb-2">
-                <a
-                  href="#mountain-bikes"
-                  className="text-secondary text-decoration-none"
-                >
-                  Bicicletas de Montaña
-                </a>
-              </li>
-              <li className="mb-2">
-                <a
-                  href="#accessories"
-                  className="text-secondary text-decoration-none"
-                >
-                  Accesorios
-                </a>
-              </li>
-              <li className="mb-2">
-                <a
-                  href="#parts"
-                  className="text-secondary text-decoration-none"
-                >
-                  Repuestos
-                </a>
-              </li>
-            </ul>
-          </div>
+  
 
           <div className="col-md-3 mb-4">
             <h6 className="fw-bold mb-3">CONTACTO</h6>
@@ -126,7 +85,6 @@ const Footer = () => {
         </div>
 
         <hr className="my-4 border-secondary" />
-
         <div className="row">
           <div className="col-md-6 text-md-start">
             <p className="text-secondary mb-0">

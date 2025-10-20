@@ -56,7 +56,7 @@ function Navbar() {
       
     </div>
         <li className="nav-item d-flex justify-content-end ">
-          <NavLink className={validaRoot} to="/cart">🛒Total: $ {totalCart}</NavLink>
+          <NavLink className={validaRoot} to="/cart">🗑️ Total: ${Number(totalCart).toLocaleString('es-CL')}</NavLink>
         </li>      
   </div>
 </nav>
