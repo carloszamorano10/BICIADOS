@@ -5,13 +5,13 @@ import CardBici from "../components/CardBici";
 
 function Favoritos() {
   const navigate = useNavigate();
-  const { biciFav, getFavBicis, userIsLogged} = useContext(GlobalContext);
+  const { biciFav, getFavBicis, userIsLogged } = useContext(GlobalContext);
 
   useEffect(() => {
-    getFavBicis();
-  }, [getFavBicis]); 
-
-    
+    if (userIsLogged) {
+      getFavBicis();
+    }
+  }, [getFavBicis, userIsLogged]);
 
   if (!userIsLogged) {
     return (
